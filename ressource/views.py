@@ -509,6 +509,8 @@ def automation(request, ressource_id, operation_id):
         for vm in compute_client.virtual_machines.list(ressource.groupe_name):
             compute_client.virtual_machines.power_off(ressource.groupe_name,vm.name)
     elif operation_id == '2':
+        for vm in compute_client.virtual_machines.list(ressource.groupe_name):
+            compute_client.virtual_machines.start(ressource.groupe_name, vm.name)
         print()
 
 

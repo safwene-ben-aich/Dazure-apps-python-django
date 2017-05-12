@@ -37,6 +37,20 @@
                                         </button>
                                     </form>
                 </div>
+                <div class="panel-body">
+                    <h3>Synopsis 2 </h3>
+                    <p>Start all the Azure VMs in a specific Azure Resource Group</p>
+                    <form action="{% url 'ressource:automation' ressource.id 2 %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="subnet_id" value="{{ subnet.id }}" />
+                                        <button type="submit" class="btn btn-success btn-xs">Start
+                                        </button>
+                                    </form>
+                </div>
+
+
+
+
             </div>
 
         </div>
