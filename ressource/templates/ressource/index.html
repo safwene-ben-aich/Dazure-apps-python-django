@@ -1,0 +1,54 @@
+{% extends 'ressource/base.html' %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>{{ user.username }}'s Ressources</h3>
+        </div>
+        {% if ressources %}
+            {% for ressource in ressources %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                         <a href="{% url 'ressource:detail_ressource' ressource.id %}">
+                            <img src="/media/ressource.png" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h4>{{ ressource.groupe_name }}</h4>
+
+                            <!-- View Details -->
+                            <a href="{% url 'ressource:detail_ressource' ressource.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <!-- Delete Ressource -->
+                            <form action="{% url 'ressource:delete_ressource' ressource.id  %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="ressource_id" value="{{ ressource.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'ressource:create_ressource' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Ajouter une ressource
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+
+</div>
+{% endblock %}

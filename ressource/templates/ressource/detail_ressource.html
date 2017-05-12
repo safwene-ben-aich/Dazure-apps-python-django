@@ -1,0 +1,144 @@
+{% extends 'ressource/base.html' %}
+{% block title %}{{ ressource }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'ressource:detail_ressource' ressource.id %}">
+                            <img src="/media/ressource.png" class="img-responsive">
+                        </a>
+                    <h4><b>Ressource name :</b> {{ ressource.groupe_name }} </h4>
+                    <h4><b>Ressource location :</b> {{ ressource.location }} </h4>
+                    <h4><b>State :</b> Active </h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'ressource:detail_ressource' ressource.id %}">View All</a></li>
+                <li role="presentation"><a href="{% url 'ressource:create_storage' ressource.id %}">Storage account</a></li>
+                <li role="presentation"><a href="{% url 'ressource:create_vnet' ressource.id %}">Virtual Network</a></li>
+                <li role="presentation"><a href="{% url 'ressource:create_subnet' ressource.id %}">Network Subnet</a></li>
+                <li role="presentation"><a href="{% url 'ressource:create_nic' ressource.id %}">Network Interface</a></li>
+                <li role="presentation"><a href="{% url 'ressource:create_virualMachine' ressource.id %}">Virtual Machines</a></li>
+                <li role="presentation"><a href="{% url 'ressource:automation' ressource.id 0 %}">Automations</a></li>
+
+
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>All ressources</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+<table class="table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                           {% for storage in ressource.storages_set.all %}
+                            <tr>
+                                <td>{{ storage.storage_account_name }}</td>
+                                <td>Storage account</td>
+                            <td>
+                                    <form action="{% url 'ressource:delete_storage' ressource.id storage.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="storage_id" value="{{ storage.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                            {% for vnet in ressource.vnet_set.all %}
+                            <tr>
+                                <td>{{ vnet.vnet_name }}</td>
+                                <td>Virtual Network</td>
+                            <td>
+                                    <form action="{% url 'ressource:delete_vnet' ressource.id vnet.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="vnet_id" value="{{ vnet.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% for subnet in ressource.subnet_set.all %}
+                            <tr>
+                                <td>{{ subnet.subnet_name }}</td>
+                                <td>Network Subnet</td>
+                             <td>
+                                    <form action="{% url 'ressource:delete_subnet' ressource.id subnet.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="subnet_id" value="{{ subnet.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                         {% for nic in ressource.nic_set.all %}
+                            <tr>
+                                <td>{{ nic.nic_name }}</td>
+                                <td>Network Interface</td>
+                             <td>
+                                    <form action="{% url 'ressource:delete_nic' ressource.id nic.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="nic_id" value="{{ nic.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% for vm in ressource.virtualmachine_set.all %}
+                            <tr>
+                                <td>{{ vm.vm_name }}</td>
+                                <td>Virtual Machine</td>
+                             <td>
+                                    <form action="{% url 'ressource:delete_virtualMachine' ressource.id vm.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="nic_id" value="{{ vm.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

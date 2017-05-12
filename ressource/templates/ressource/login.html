@@ -1,0 +1,69 @@
+{% extends 'ressource/base_visitor.html' %}
+{% block title %}Log In{% endblock %}
+{% block login_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Authentification</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="{% url 'ressource:login_user'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="id_username">
+                                Username:
+                            </label>
+                            <div class="col-sm-10">
+                                <input id="id_username" maxlength="30" name="username" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="id_password">
+                                Password:
+                            </label>
+                            <div class="col-sm-10">
+                                <input id="id_password" maxlength="30" name="password" type="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Envoyer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                  Vous ne possédez pas de compte Microsoft Azure ? <a href="https://azure.microsoft.com/fr-fr/" target="_blank">Cliquez ici</a><br>
+                  Vous ne possédez pas de compte Dazure ? <a href="{% url 'ressource:register' %}">Cliquez ici</a>
+                </div>
+            </div>
+        </div>
+    <div class="col-sm-12 col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>C'est quoi Dazure ?</h3>
+                    <p>Dzure est une application web développé en Python avec le framework Django qui sert à intéragir avec Le PaaS microsoft Azure</p>
+                    <h3>Comment je peux gérer mes ressources ?</h3>
+                    <p>Tout d'abord il faut avoir un compte microsoft azure et un compte Dazure, Sinon vous ne pouvez pas accéder à l'application.</p>
+                    <h3>Des exemples d'utilisation de l'application </h3>
+                    <ul>
+                        <li>Créer et gérer un groupe de ressources (Stockage,Réseau virtuelle,...)</li>
+                        <li>Lancement d'une machine virtuelle</li>
+                        <li>Lancement d'un script d'automatisation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+
